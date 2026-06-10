@@ -3,8 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <title>Bear Run Game</title>
-  <!-- Load Brython -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #f5f5f5;
+      font-family: "Courier New", monospace;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #ffcc00;
+    }
+    #output {
+      border: 2px solid #ffcc00;
+      padding: 20px;
+      margin: 20px auto;
+      width: 70%;
+      min-height: 250px;
+      background-color: #2a2a2a;
+      text-align: left;
+      white-space: pre-wrap;
+    }
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+    }
+    input {
+      width: 60%;
+    }
+    button {
+      background-color: #ffcc00;
+      color: #1e1e1e;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ffaa00;
+    }
+  </style>
 </head>
 <body onload="brython()">
   <h1>🐻 Bear Run</h1>
@@ -21,19 +61,25 @@ userInput = document["userInput"]
 def print_line(text):
     output <= html.P(text)
 
-# Show ASCII bear at the start
 print_line(r"""
-   ────▄▀▄─────▄▀▄
-   ───▄█░░▀▀▀▀▀░░█▄
-   ──█░░░░░░░░░░░░░█
-   ──█░░█░░░░░░█░░█
-   ──█░░░░░░░░░░░░░█
-   ───█░░░░░░░░░░░█
-   ────█░░░░░░░░░█
-   ─────█░░░░░░░█
-   ──────█░░░░░█
-   ───────█░░█
-   ────────██
+              (\\  _                      ___
+             .-"`"(\\                _.""`   `"-.
+            /      ` `-._        _.-"            `\__
+           6   6)        `-.__.-'                    `",
+          /                                         `;-`
+         /     ,                                     |
+        ()    /  /`                                  |
+         `---`"~``\                                  |
+                   \                                 |
+                    \            \      /           /
+                    /`,   ,      |     |           /
+                   /   "-.|      |     |         /'
+                  /     / |     /,__   |       /`\
+             jgs /    /'  |    /    `"'\      (   \
+              __/   /'    |   |         `\     \   \
+              \    /      |   |           `\    \   \
+               `-,/      /    |            /     |-"`
+                        `"""^^^           `^^""""`
 """)
 
 state = "start"
@@ -92,3 +138,4 @@ document["userInput"].bind("keypress", lambda e: runGame() if e.keyCode==13 else
   </script>
 </body>
 </html>
+
