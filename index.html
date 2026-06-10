@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Bear Run Game</title>
+  <!-- Load Brython -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+</head>
+<body onload="brython()">
+  <h1>🐻 Bear Run</h1>
+  <div id="output"></div>
+  <input id="userInput" type="text" placeholder="Type here...">
+  <button onclick="runGame()">Submit</button>
+
+  <script type="text/python">
+from browser import document, html
+
+output = document["output"]
+userInput = document["userInput"]
+
+def print_line(text):
+    output <= html.P(text)
+
+# Show ASCII bear at the start
+print_line(r"""
+   ────▄▀▄─────▄▀▄
+   ───▄█░░▀▀▀▀▀░░█▄
+   ──█░░░░░░░░░░░░░█
+   ──█░░█░░░░░░█░░█
+   ──█░░░░░░░░░░░░░█
+   ───█░░░░░░░░░░░█
+   ────█░░░░░░░░░█
+   ─────█░░░░░░░█
+   ──────█░░░░░█
+   ───────█░░█
+   ────────██
+""")
+
+state = "start"
+
+def runGame(event=None):
+    global state
+    choice = userInput.value.lower()
+    userInput.value = ""
+
+    if state == "start":
+        print_line("Welcome to Bear Run 🐻. Your mission is to escape from a bear.")
+        print_line("Are you ready to begin? (Y/N)")
+        state = "begin"
+
+    elif state == "begin":
+        if choice in ["y","yes"]:
+            print_line("You're at a cross road, Where do you want to go? (left/right)")
+            state = "crossroad"
+        elif choice in ["n","no"]:
+            print_line("Oki Goodbye.")
+            state = "end"
+        else:
+            print_line("You typed wrong.")
+
+    elif state == "crossroad":
+        if choice in ["left","l"]:
+            print_line("You see a river, Do you swim or stay on land? (swim/stay)")
+            state = "river"
+        elif choice in ["right","r"]:
+            print_line("You fell into a hole. Game over.")
+            state = "end"
+
+    elif state == "river":
+        if choice == "stay":
+            print_line("You see 3 colored doors. White, Pink, or Black?")
+            state = "doors"
+        elif choice == "swim":
+            print_line("Something moved beneath the surface. Jaws snap shut. Game over.")
+            state = "end"
+
+    elif state == "doors":
+        if choice in ["black","b"]:
+            print_line("The Black door looms silently. You push it open, and beyond lies a safe passage. You've Chosen Wisely. Congrats!")
+            state = "end"
+        elif choice in ["white","w"]:
+            print_line("The White door shines brightly. You step through... The blinding light disorients you, and you fall into a pit. Game Over.")
+            state = "end"
+        elif choice in ["pink","p"]:
+            print_line("The pink door looks cheerful. Inside, sweet-smelling gas fills the room. You collapse. Game Over.")
+            state = "end"
+        else:
+            print_line("You chose a door that doesn't exist. Game Over.")
+            state = "end"
+
+document["userInput"].bind("keypress", lambda e: runGame() if e.keyCode==13 else None)
+  </script>
+</body>
+</html>
